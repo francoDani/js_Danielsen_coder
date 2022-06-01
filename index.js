@@ -1,32 +1,66 @@
-let iteration = +prompt("ingresa un numero para ejecutar el bucle");
+let invoiceTotal = +(prompt("ingrese el monto total de la factura"));
+let invoiceSubtotal =+(prompt("subtotal de la factura"));
 
-if(iteration != 0){
-  for (let i = 1; i <= iteration; i++) {
-    console.log("esta es la iteración n°: " + i);
-  }
-}else{console.log('cero no cuenta, perdiste')}
+let taxes
 
-
-let text = prompt("ingresa un texto para descomponer");
-
-for (let i = 0; i < text.length; i++) {
-  console.log(text[i]);
-  if (i == text.length) {
-    alert("tu texto se descompuso con éxito!");
+/**
+ * this function return the % of taxes applied in the batch
+ * @param {number} total this is the number in the "total" section of the invoice, this value includes taxes
+ * @param {number} subtotal this number is the total of the purchase before taxes
+ */
+const taxCalculation = (total, subtotal) => {
+  if (total && subtotal){
+    taxes = ((total*100)/subtotal)-100;    
+  }else{
+    while(!total){
+      console.error("debe ingresar al menos el total de la factura")
+      invoiceTotal = +(prompt("ingrese el monto total de la factura"));
+    }
+    taxes = 1    
   }
 }
 
-let esc = (prompt("ingresa la palabra clave")).toUpperCase();
+let batchCost = +(prompt("costo del lote"));
+let batchUnits = +(prompt("cantidad de unidades del lote"));
+let unitaryCost
 
-
-while (esc != "ESC") {    
-    console.log('Esa no es la palabra clave!');
-    esc = prompt("no tuviste suerte!");
-};
-
-let number = +(prompt('ingresa un número'));
-
-for (let i = 0; i <= 10; i++) {
-  let result = number * i;
-  console.log(number + ' x ' + i + ' = '+ result);
+/**
+ * this function calculates the unitary cost adding the taxes calculated before
+ * @param {number} cost This is what the batch of a single product costs you
+ * @param {number} units This is how much units are in the batch
+ */
+const costCalculation = (cost, units) => {
+  while(!cost){
+    console.error("ingrese un costo del lote");
+    cost = +(prompt("costo del lote"));    
+  }
+  while (!units) {
+    console.error("ingrese la cantidad de unidades del lote")
+    units = +(prompt("cantidad de unidades del lote"));
+  }
+  unitaryCost = cost/units;
 }
+
+let marginOfGain = +(prompt("porcentaje deseado de ganancia"));
+let finalPrice
+let unitPlusTaxes
+/**
+ * 
+ * @param {number} taxes this value comes from taxCalculation function
+ * @param {number} unitaryCost this value comes from costCalculation function
+ * @param {number} margin this is the desired margin of gain selected by the user
+ */
+const productPrice = (taxes, unitaryCost, margin) => {
+  taxesAmount = (unitaryCost*taxes)/100;
+  unitPlusTaxes = unitaryCost + taxesAmount;
+  finalPrice = ((unitPlusTaxes*margin)/100)+unitPlusTaxes;
+}
+
+taxCalculation(invoiceTotal, invoiceSubtotal);
+
+costCalculation(batchCost, batchUnits);
+
+productPrice(taxes, unitaryCost, marginOfGain);
+console.log("El costo de tu producto es: " + unitaryCost);
+console.log("Si le sumamos impuestos por el " + taxes +"% es: " + unitPlusTaxes);
+console.log("Y con un margen de ganancia del " + marginOfGain + "% sería:" + finalPrice);
