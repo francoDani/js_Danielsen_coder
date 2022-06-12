@@ -1,66 +1,89 @@
-let invoiceTotal = +(prompt("ingrese el monto total de la factura"));
-let invoiceSubtotal =+(prompt("subtotal de la factura"));
-
-let taxes
+let comestibles = [];
+let golosinas = [];
+let bebidas = [];
+let sinCategoría = [];
 
 /**
- * this function return the % of taxes applied in the batch
- * @param {number} total this is the number in the "total" section of the invoice, this value includes taxes
- * @param {number} subtotal this number is the total of the purchase before taxes
+ * this constructor will be used to create new products
+ * @param {string} name product name
+ * @param {string} category product category
+ * @param {number} cost product cost
+ * @param {number} margin porcentage of profit
+ * @param {number} price cost plus margin
  */
-const taxCalculation = (total, subtotal) => {
-  if (total && subtotal){
-    taxes = ((total*100)/subtotal)-100;    
+function Product(name, category, cost, margin, price) {
+  this.name = name;
+  this.category = category;
+  this.cost = cost;
+  this.margin = margin;
+  this.price = price;
+  this.calculatePrice = function () {
+    this.price = cost + (cost * margin) / 100;
+  };
+}
+
+/**
+ * this function will sort the products by category
+ * @param {object} product product object
+ */
+let orderByCategory = (product) => {
+  switch (product.category) {
+    case "comestibles":
+      comestibles.push(product);
+      break;
+    case "1":
+      comestibles.push(product);
+      break;
+    case "golosinas":
+      golosinas.push(product);
+      break;
+    case "2":
+      golosinas.push(product);
+      break;
+    case "3":
+      bebidas.push(product);
+      break;
+    case "bebidas":
+      bebidas.push(product);
+      break;
+
+    default:
+      sinCategoría.push(product);
+      break;
+  }
+};
+
+/**
+ * this function will create the new product and will iterate many times as the user needs
+ */
+let newProduct = () => {
+  let name = prompt("Nombre del producto");
+  let category = prompt("Categoría: 1-Comestibles 2-golosinas 3-Bebidas");
+  category.toLocaleLowerCase;
+  let cost = +prompt("Costo del producto");
+  let margin = +prompt("Margen de ganancia deseado");
+  name = new Product(name, category, cost, margin);
+  name.calculatePrice();
+  console.log(name);
+  orderByCategory(name);
+  let newOne = prompt("quieres agregar otro producto?");
+  if (newOne == "si") {
+    newProduct();
   }else{
-    while(!total){
-      console.error("debe ingresar al menos el total de la factura")
-      invoiceTotal = +(prompt("ingrese el monto total de la factura"));
-    }
-    taxes = 1    
+    console.info("Tienes registrados " + comestibles.length + " comestibles:")
+    comestibles.forEach(comestible => {
+      console.log(comestible.name + " $"+ comestible.price);
+    });
+    console.info("Tienes registradas " + golosinas.length + " golosinas:")
+    golosinas.forEach(golosina => {
+      console.log(golosina.name + " $"+ golosina.price);
+    });
+    console.info("Tienes registradas " + bebidas.length + " bebidas:")
+    bebidas.forEach(bebida => {
+      console.log(bebida.name + " $"+ bebida.price);
+    });
+
   }
-}
+};
 
-let batchCost = +(prompt("costo del lote"));
-let batchUnits = +(prompt("cantidad de unidades del lote"));
-let unitaryCost
-
-/**
- * this function calculates the unitary cost adding the taxes calculated before
- * @param {number} cost This is what the batch of a single product costs you
- * @param {number} units This is how much units are in the batch
- */
-const costCalculation = (cost, units) => {
-  while(!cost){
-    console.error("ingrese un costo del lote");
-    cost = +(prompt("costo del lote"));    
-  }
-  while (!units) {
-    console.error("ingrese la cantidad de unidades del lote")
-    units = +(prompt("cantidad de unidades del lote"));
-  }
-  unitaryCost = cost/units;
-}
-
-let marginOfGain = +(prompt("porcentaje deseado de ganancia"));
-let finalPrice
-let unitPlusTaxes
-/**
- * 
- * @param {number} taxes this value comes from taxCalculation function
- * @param {number} unitaryCost this value comes from costCalculation function
- * @param {number} margin this is the desired margin of gain selected by the user
- */
-const productPrice = (taxes, unitaryCost, margin) => {
-  taxesAmount = (unitaryCost*taxes)/100;
-  unitPlusTaxes = unitaryCost + taxesAmount;
-  finalPrice = ((unitPlusTaxes*margin)/100)+unitPlusTaxes;
-}
-
-taxCalculation(invoiceTotal, invoiceSubtotal);
-
-costCalculation(batchCost, batchUnits);
-
-productPrice(taxes, unitaryCost, marginOfGain);
-console.log("El costo de tu producto es: " + unitaryCost);
-console.log("Si le sumamos impuestos por el " + taxes +"% es: " + unitPlusTaxes);
-console.log("Y con un margen de ganancia del " + marginOfGain + "% sería:" + finalPrice);
+newProduct();
