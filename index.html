@@ -23,15 +23,22 @@
 
 <body>
     <h1 id="tittle">Bienvenido </h1>
-    <table>
+    <button id="new-product" onclick="newProduct()">Agregar producto</button>
+    <button id="search-product" onclick="searchProduct()">Buscar producto</button>
+    <table id="product-table">
         <tr>
             <th>Nombre del producto</th>
             <th>Categoría</th>
             <th>Costo</th>
             <th>Margen de Ganancia</th>
             <th>Precio de venta</th>
-        </tr>        
+        </tr>
+        <tbody id="table-body"></tbody>
     </table>
+    <h1>El producto que buscas:</h1>
+    <ul id="search">
+
+    </ul>
 </body>
 <script src="index.js"></script>
 
