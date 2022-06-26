@@ -16,16 +16,17 @@ let saludo = (name) => {
 };
 
 saludo(name);
-
-function Product(name, category, cost, margin, price, id) {
-  this.name = name;
-  this.category = category;
-  this.cost = cost;
-  this.margin = margin;
-  this.price = price;
-  this.calculatePrice = function () {
-    this.price = cost + (cost * margin) / 100;
-  };
+class Product {
+  constructor(name, category, cost, margin, price) {
+    this.name = name;
+    this.category = category;
+    this.cost = cost;
+    this.margin = margin;
+    this.price = price;
+    this.calculatePrice = function () {
+      this.price = cost + (cost * margin) / 100;
+    };
+  }
 }
 
 let displayproducts = () => {
@@ -128,20 +129,20 @@ let searchRender = document.getElementById("search");
  * @param {string} toSearch this input will be used to search in all te arrays for a matching product
  */
 const searchProduct = () => {
-  let toSearch = prompt("Que producto buscas?");  
+  let toSearch = prompt("Que producto buscas?");
   toSearch = toSearch.toLocaleUpperCase();
   let found;
   if (food.length || candy.length || drinks.length || sinCategoría) {
     for (i = 0; food.length > i; i++) {
       if (food[i].name == toSearch) {
-        searchRender.innerHTML = `<li> El ${food[i].name} cuesta ${food[i].price}</li>`        
+        searchRender.innerHTML = `<li>${food[i].name} cuesta ${food[i].price}</li>`;
         found = true;
       }
     }
     if (!found) {
       for (i = 0; candy.length > i; i++) {
         if (candy[i].name == toSearch) {
-          searchRender.innerHTML = `<li> El ${candy[i].name} cuesta ${candy[i].price}</li>`
+          searchRender.innerHTML = `<li>${candy[i].name} cuesta ${candy[i].price}</li>`;
           found = true;
         }
       }
@@ -149,7 +150,7 @@ const searchProduct = () => {
     if (!found) {
       for (i = 0; drinks.length > i; i++) {
         if (drinks[i].name == toSearch) {
-          searchRender.innerHTML = `<li> El ${drinks[i].name} cuesta ${drinks[i].price}</li>`
+          searchRender.innerHTML = `<li>${drinks[i].name} cuesta ${drinks[i].price}</li>`;
           found = true;
         }
       }
@@ -157,7 +158,7 @@ const searchProduct = () => {
     if (!found) {
       for (i = 0; sinCategoría.length > i; i++) {
         if (sinCategoría[i].name == toSearch) {
-          searchRender.innerHTML = `<li> El ${sinCategoría[i].name} cuesta ${sinCategoría[i].price}</li>`
+          searchRender.innerHTML = `<li>${sinCategoría[i].name} cuesta ${sinCategoría[i].price}</li>`;
           found = true;
         }
       }
@@ -167,6 +168,5 @@ const searchProduct = () => {
     }
   } else {
     console.error("No hay ningún producto registrado aún");
-  }  
+  }
 };
-
