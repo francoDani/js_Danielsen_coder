@@ -1,5 +1,166 @@
+@import "variables";
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+body {
+    width: 100vw;
+    min-height: 100vh;
+    background-color: $bg_home;
+    font-family: $font;
+    nav {
+        background-color: $bg_menu;
+        position: absolute;
+        top: 0;
+        left: -250px;
+        width: 300px;
+        min-height: 100vh;
+        transition: 0.8s;
+        box-shadow: $shadow;
+        display: flex;
+        align-items: center;
+        #dock {
+            width: 50px;
+            position: absolute;
+            right: 0;
+            height: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 20;
+            i {
+                color: white;
+                cursor: pointer;
+            }
+        }
+        #menu {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            width: 100%;
+            position: relative;
+            .nav__container {
+                width: 100%;
+                height: 50%;
+                .menu__nav {
+                    list-style: none;
+                    display: flex;
+                    flex-direction: column;
+                    width: 100%;
+                    transition: 1s;
+                    li {
+                        padding-top: 1rem;
+                        text-align: center;
+                        cursor: pointer;
+                        &:hover {
+                            background-color: $bg_hover;
+                        }
+                        a {
+                            text-decoration: none;
+                            color: white;
+                            font-size: 1.4rem;
+                            i {
+                                margin-right: 5px;
+                            }
+                        }
+                    }
+                }
+                .hiden {
+                    transform: translate(-100%);
+                    transition: 1s;
+                }
+            }
+            .info__container {
+                width: 100%;
+                height: 200px;
+                background-color: $bg_hover;
+                position: absolute;
+                bottom: 0;
+                #menu__info {
+                    width: 100%;
+                    height: 200px;
+                    list-style-type: none;
+                    color: white;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    li {
+                        padding: .5rem;
+                    }
+                }
+            }
+        }
+    }
+    .show {
+        left: 0;
+    }
+    section {
+        width: 100vw;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        padding: 0 60px;
+        .tittle {
+            text-align: center;
+            font-size: 2rem;
+        }
+        h3 {
+            text-align: center;
+        }
+        .new__product {
+            display: flex;
+            justify-content: space-evenly;
+            margin-top: 2rem;
+            background-color: $bg_calculator;
+            padding: 1rem;
+            .new__product-input {
+                padding: .3rem;
+                &:focus {
+                    outline: none;
+                }
+            }
+            button {
+                background-color: $ofwhite;
+                padding: .5rem;
+                border: solid 2px $bg_hover;
+                font-weight: bold;
+                transition: .5s;
+                cursor: pointer;
+                &:hover {
+                    color: whitesmoke;
+                    background-color: $bg_hover;
+                }
+                &:focus {
+                    outline: none;
+                }
+            }
+            .error {
+                border: $warning;
+            }
+        }
+        .error__msg {
+            text-align: center;
+            color: red;
+            visibility: hidden;            
+        }
+        .show {
+            visibility: visible;
+        }
+        table {
+            text-align: center;
+            border: solid 2px $bg_hover;
+            th {
+                background-color: $bg_hover;
+                color: whitesmoke;
+            }
+            td {
+                border: solid 2px $bg_menu;
+            }
+        }
+    }
 }

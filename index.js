@@ -6,16 +6,8 @@ let sinCategoría = [];
 let table = document.getElementById("table-body");
 let newRow = document.createElement("tr");
 let newTd = document.createElement("td");
-let name = prompt("Como es tu nombre?");
+let newProductSection = document.querySelector('.new__product');
 
-let saludo = (name) => {
-  while (!name) {
-    name = prompt("Debe ingresar un nombre para continuar");
-  }
-  tittle.innerHTML += name;
-};
-
-saludo(name);
 class Product {
   constructor(name, category, cost, margin, price) {
     this.name = name;
@@ -29,33 +21,8 @@ class Product {
   }
 }
 
-let displayproducts = () => {
-  if (food.length != 0) {
-    for (let one of food) {
-      table.innerHTML += `<tr><td>${one.name}</td><td>${one.category}</td><td>${one.cost}</td><td>${one.margin}</td><td>${one.price}</td></tr>`;
-    }
-  } else {
-    console.error("No tienes comestibles registrados");
-  }
-  if (candy.length != 0) {
-    for (let can of candy) {
-      table.innerHTML += `<tr><td>${can.name}</td><td>${can.category}</td><td>${can.cost}</td><td>${can.margin}</td><td>${can.price}</td></tr>`;
-    }
-  } else {
-    console.error("No tienes Golosinas registradas");
-  }
-  if (drinks.length != 0) {
-    for (let drink of drinks) {
-      table.innerHTML += `<tr><td>${drink.name}</td><td>${drink.category}</td><td>${drink.cost}</td><td>${drink.margin}</td><td>${drink.price}</td></tr>`;
-    }
-  } else {
-    console.error("No tienes bebidas registradas");
-  }
-  if (sinCategoría.length != 0) {
-    for (let whithout of sinCategoría) {
-      table.innerHTML += `<tr><td>${whithout.name}</td><td>${whithout.category}</td><td>${whithout.cost}</td><td>${whithout.margin}</td><td>${whithout.price}</td></tr>`;
-    }
-  }
+let displayproducts = (product) => {
+  table.innerHTML += `<tr><td>${product.name}</td><td>${product.category}</td><td>${product.cost}</td><td>%${product.margin}</td><td>${product.price}</td></tr>`;
 };
 
 let orderByCategory = (product) => {
@@ -90,11 +57,21 @@ let orderByCategory = (product) => {
   }
 };
 
-let newProduct = () => {
-  let name = prompt("Nombre del producto");
-  name = name.toLocaleUpperCase();
+const clearFields = () => {
+  document.getElementById("product__name").value = "";  
+  document.getElementById("product__name").classList.remove('error');
+  document.getElementById("product__category").value = "";
+  document.getElementById("product__category").classList.remove('error');
+  document.getElementById("product__cost").value = "";
+  document.getElementById("product__cost").classList.remove('error');
+  document.getElementById("product__gain").value = "";
+  document.getElementById("product__gain").classList.remove('error');
+};
 
-  let category = prompt("Categoría: 1-Comestibles 2-golosinas 3-Bebidas");
+let newProduct = () => {
+  let name = document.getElementById("product__name").value;
+  name = name.toLocaleUpperCase();
+  let category = document.getElementById("product__category").value;
   category.toLocaleLowerCase;
   switch (category) {
     case "1":
@@ -110,16 +87,17 @@ let newProduct = () => {
       break;
   }
 
-  let cost = +prompt("Costo del producto");
-  let margin = +prompt("Margen de ganancia deseado");
-  let product = new Product(name, category, cost, margin);
-  product.calculatePrice();
-  orderByCategory(product);
-  let newOne = prompt("quieres agregar otro producto?");
-  if (newOne == "si") {
-    newProduct();
-  } else {
-    displayproducts();
+  let cost = +document.getElementById("product__cost").value;
+  let margin = +document.getElementById("product__gain").value;
+  if (name != " " && name != "" && category != "" && cost != "" && margin != "") {
+    let product = new Product(name, category, cost, margin);
+    product.calculatePrice();
+    orderByCategory(product);
+    displayproducts(product);
+    clearFields();
+    document.querySelector('.error__msg').classList.remove('show');    
+  }else{
+    document.querySelector('.error__msg').classList.add('show');
   }
 };
 
@@ -170,3 +148,14 @@ const searchProduct = () => {
     console.error("No hay ningún producto registrado aún");
   }
 };
+newProductSection.addEventListener("keyup", ({key}) => {
+  if (key === "Enter") {
+    newProduct();
+  }
+})
+/* 
+$(".input1").on('keyup', function (e) {
+  if (e.key === 'Enter' || e.keyCode === 13) {
+    newProduct()
+  }
+}); */
