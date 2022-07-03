@@ -79,7 +79,7 @@ body {
           justify-content: center;
           align-items: center; }
           body nav #menu .info__container #menu__info li {
-            padding: .5rem; }
+            padding: 0.5rem; }
   body .show {
     left: 0; }
   body section {
@@ -87,7 +87,13 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    padding: 0 60px; }
+    padding: 0 200px; }
+    body section .search__section input {
+      padding: 0.3rem; }
+      body section .search__section input:focus {
+        outline: none; }
+    body section .error {
+      border: solid 2px red; }
     body section .tittle {
       text-align: center;
       font-size: 2rem; }
@@ -100,15 +106,15 @@ body {
       background-color: #669BBC;
       padding: 1rem; }
       body section .new__product .new__product-input {
-        padding: .3rem; }
+        padding: 0.3rem; }
         body section .new__product .new__product-input:focus {
           outline: none; }
       body section .new__product button {
         background-color: #edede9;
-        padding: .5rem;
+        padding: 0.5rem;
         border: solid 2px #003049;
         font-weight: bold;
-        transition: .5s;
+        transition: 0.5s;
         cursor: pointer; }
         body section .new__product button:hover {
           color: whitesmoke;

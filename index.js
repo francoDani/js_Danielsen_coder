@@ -1,12 +1,17 @@
-let products = [];
 let food = [];
 let candy = [];
 let drinks = [];
 let sinCategoría = [];
 let table = document.getElementById("table-body");
+let searchTable = document.getElementById("search-table-body");
+let searchSection = document.querySelector(".search__section");
+let searchRender = document.getElementById("search__value");
 let newRow = document.createElement("tr");
 let newTd = document.createElement("td");
-let newProductSection = document.querySelector('.new__product');
+let newProductSection = document.querySelector(".new__product");
+let button = (target) => {
+  return `<button class='delete' onClick='deleteProduct(${target})'>Borrar</button>`;
+};
 
 class Product {
   constructor(name, category, cost, margin, price) {
@@ -21,8 +26,16 @@ class Product {
   }
 }
 
-let displayproducts = (product) => {
-  table.innerHTML += `<tr><td>${product.name}</td><td>${product.category}</td><td>${product.cost}</td><td>%${product.margin}</td><td>${product.price}</td></tr>`;
+let displayproducts = () => {
+  /* table.innerHTML = ""; */
+  if (localStorage.length != 0) {
+    for (i = 0; i <= localStorage.length; i++) {
+      let item = localStorage.getItem(localStorage.key(i));
+      item = JSON.parse(item);
+      let id = item.name;
+      table.innerHTML += `<tr><td>${id}</td><td>${item.category}</td><td>${item.cost}</td><td>%${item.margin}</td><td>${item.price}</td><td><button onClick="deleteProduct('${id}')">Borrar</button></td></tr>`;
+    }
+  }  
 };
 
 let orderByCategory = (product) => {
@@ -58,104 +71,65 @@ let orderByCategory = (product) => {
 };
 
 const clearFields = () => {
-  document.getElementById("product__name").value = "";  
-  document.getElementById("product__name").classList.remove('error');
+  document.getElementById("product__name").value = "";
+  document.getElementById("product__name").classList.remove("error");
   document.getElementById("product__category").value = "";
-  document.getElementById("product__category").classList.remove('error');
+  document.getElementById("product__category").classList.remove("error");
   document.getElementById("product__cost").value = "";
-  document.getElementById("product__cost").classList.remove('error');
+  document.getElementById("product__cost").classList.remove("error");
   document.getElementById("product__gain").value = "";
-  document.getElementById("product__gain").classList.remove('error');
+  document.getElementById("product__gain").classList.remove("error");
+};
+
+const loadItem = (product) => {
+  localStorage.setItem(product.name, JSON.stringify(product));
 };
 
 let newProduct = () => {
   let name = document.getElementById("product__name").value;
   name = name.toLocaleUpperCase();
   let category = document.getElementById("product__category").value;
-  category.toLocaleLowerCase;
-  switch (category) {
-    case "1":
-      category = "comestibles";
-      break;
-    case "2":
-      category = "golosinas";
-      break;
-    case "3":
-      category = "bebidas";
-      break;
-    default:
-      break;
-  }
-
   let cost = +document.getElementById("product__cost").value;
   let margin = +document.getElementById("product__gain").value;
-  if (name != " " && name != "" && category != "" && cost != "" && margin != "") {
+  if (noBlankField(name, category, cost, margin)) {
     let product = new Product(name, category, cost, margin);
     product.calculatePrice();
     orderByCategory(product);
-    displayproducts(product);
     clearFields();
-    document.querySelector('.error__msg').classList.remove('show');    
-  }else{
-    document.querySelector('.error__msg').classList.add('show');
+    loadItem(product);
+    hideError();
+    displayproducts();
+  } else {
+    showError();
   }
 };
 
-let searchRender = document.getElementById("search");
 /**
  * this function will be used to iterate through the arrays to find an item
  * @param {string} toSearch this input will be used to search in all te arrays for a matching product
  */
-const searchProduct = () => {
-  let toSearch = prompt("Que producto buscas?");
-  toSearch = toSearch.toLocaleUpperCase();
-  let found;
-  if (food.length || candy.length || drinks.length || sinCategoría) {
-    for (i = 0; food.length > i; i++) {
-      if (food[i].name == toSearch) {
-        searchRender.innerHTML = `<li>${food[i].name} cuesta ${food[i].price}</li>`;
-        found = true;
-      }
+const searchProduct = (e) => {
+  if (e == 'clear'){
+    searchTable.innerHTML = '';
+  }else{
+    let toSearch = searchRender.value;
+    toSearch = toSearch.toLocaleUpperCase();
+    let element = localStorage.getItem(toSearch);
+    if (element == null) {
+      searchRender.classList.add('error')
+    } else {
+      searchRender.classList.remove('error')
+      let product = JSON.parse(localStorage.getItem(toSearch));
+      let id = product.name;
+      searchTable.innerHTML = `<tr><td>${product.name}</td><td>${product.category}</td><td>${product.cost}</td><td>%${product.margin}</td><td>${product.price}</td><td><button onClick="deleteProduct('${id}')">Borrar</button></td></tr>`;
     }
-    if (!found) {
-      for (i = 0; candy.length > i; i++) {
-        if (candy[i].name == toSearch) {
-          searchRender.innerHTML = `<li>${candy[i].name} cuesta ${candy[i].price}</li>`;
-          found = true;
-        }
-      }
-    }
-    if (!found) {
-      for (i = 0; drinks.length > i; i++) {
-        if (drinks[i].name == toSearch) {
-          searchRender.innerHTML = `<li>${drinks[i].name} cuesta ${drinks[i].price}</li>`;
-          found = true;
-        }
-      }
-    }
-    if (!found) {
-      for (i = 0; sinCategoría.length > i; i++) {
-        if (sinCategoría[i].name == toSearch) {
-          searchRender.innerHTML = `<li>${sinCategoría[i].name} cuesta ${sinCategoría[i].price}</li>`;
-          found = true;
-        }
-      }
-    }
-    if (!found) {
-      console.error("Su producto no se encuentra en nuestra lista");
-    }
-  } else {
-    console.error("No hay ningún producto registrado aún");
   }
+  
 };
-newProductSection.addEventListener("keyup", ({key}) => {
+newProductSection.addEventListener("keyup", ({ key }) => {
   if (key === "Enter") {
     newProduct();
   }
-})
-/* 
-$(".input1").on('keyup', function (e) {
-  if (e.key === 'Enter' || e.keyCode === 13) {
-    newProduct()
-  }
-}); */
+});
+
+displayproducts();

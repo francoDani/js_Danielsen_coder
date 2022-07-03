@@ -28,7 +28,8 @@
             <div class="nav__container">
                 <ul class="menu__nav hiden">
                     <li onclick="showMenu()"><a href="#"><i class="fa fa-home" aria-hidden="true"></i>Home</a></li>
-                    <li onclick="showMenu()"><a href="views/calculator.html"><i class="fa fa-calculator" aria-hidden="true"></i>Calculadora</a></li>
+                    <li onclick="showMenu()"><a href="views/calculator.html"><i class="fa fa-calculator"
+                                aria-hidden="true"></i>Calculadora</a></li>
                     <li onclick="showMenu()"><a href=""><i class="fa fa-usd" aria-hidden="true"></i>Ventas</a></li>
                 </ul>
             </div>
@@ -43,34 +44,22 @@
     </nav>
     <section>
         <h1 class="tittle">Bienvenido a CostApp</h1>
-        <table id="product-table">
+        <div class="search__section">
+            <input type="text" placeholder="Que producto buscas?" id="search__value">
+            <button id="search__btn" onclick="searchProduct()">Buscar</button>
+        </div>
+        <table id="search-table">
             <tr>
                 <th>Nombre del producto</th>
                 <th>Categoría</th>
                 <th>Costo</th>
                 <th>Margen de Ganancia</th>
                 <th>Precio de venta</th>
+                <th>Borrar</th>
             </tr>
-            <tbody id="table-body"></tbody>
+            <tbody id="search-table-body"></tbody>
         </table>
     </section>
-    <!-- <h1 id="tittle">Bienvenido </h1>
-    <button id="new-product" onclick="newProduct()">Agregar producto</button>
-    <button id="search-product" onclick="searchProduct()">Buscar producto</button>
-    <table id="product-table">
-        <tr>
-            <th>Nombre del producto</th>
-            <th>Categoría</th>
-            <th>Costo</th>
-            <th>Margen de Ganancia</th>
-            <th>Precio de venta</th>
-        </tr>
-        <tbody id="table-body"></tbody>
-    </table>
-    <h1>El producto que buscas:</h1>
-    <ul id="search">
-
-    </ul> -->
 </body>
 <script src="index.js"></script>
 <script src="scripts/front.js"></script>
