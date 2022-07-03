@@ -88,10 +88,15 @@ body {
     display: flex;
     flex-direction: column;
     padding: 0 200px; }
-    body section .search__section input {
-      padding: 0.3rem; }
-      body section .search__section input:focus {
-        outline: none; }
+    body section .search__section {
+      width: 100%;
+      padding: 1rem;
+      margin: .5rem;
+      background-color: #669BBC; }
+      body section .search__section input {
+        padding: 0.3rem; }
+        body section .search__section input:focus {
+          outline: none; }
     body section .error {
       border: solid 2px red; }
     body section .tittle {

@@ -14,7 +14,12 @@ const hideError = () => {
 const deleteProduct = (target) => {
   if (confirm("Estas seguro?")) {
     localStorage.removeItem(target);
-    displayproducts();
+    displayproducts('clear');
+  }
+};
+const deleteSearchedProduct = (target) => {
+  if (confirm("Estas seguro?")) {
+    localStorage.removeItem(target);
     searchProduct('clear');
   }
 };

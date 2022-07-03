@@ -106,6 +106,10 @@ body {
         flex-direction: column;
         padding: 0 200px;
         .search__section {
+            width: 100%;
+            padding: 1rem;
+            margin: .5rem;
+            background-color: $bg_calculator;
             input {
                 padding: 0.3rem;
                 &:focus {

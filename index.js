@@ -26,8 +26,8 @@ class Product {
   }
 }
 
-let displayproducts = () => {
-  /* table.innerHTML = ""; */
+let displayproducts = (e) => {
+  table.innerHTML = "";
   if (localStorage.length != 0) {
     for (i = 0; i <= localStorage.length; i++) {
       let item = localStorage.getItem(localStorage.key(i));
@@ -35,7 +35,7 @@ let displayproducts = () => {
       let id = item.name;
       table.innerHTML += `<tr><td>${id}</td><td>${item.category}</td><td>${item.cost}</td><td>%${item.margin}</td><td>${item.price}</td><td><button onClick="deleteProduct('${id}')">Borrar</button></td></tr>`;
     }
-  }  
+  }
 };
 
 let orderByCategory = (product) => {
@@ -109,22 +109,21 @@ let newProduct = () => {
  * @param {string} toSearch this input will be used to search in all te arrays for a matching product
  */
 const searchProduct = (e) => {
-  if (e == 'clear'){
-    searchTable.innerHTML = '';
-  }else{
+  if (e == "clear") {
+    searchTable.innerHTML = "";
+  } else {
     let toSearch = searchRender.value;
     toSearch = toSearch.toLocaleUpperCase();
     let element = localStorage.getItem(toSearch);
     if (element == null) {
-      searchRender.classList.add('error')
+      searchRender.classList.add("error");
     } else {
-      searchRender.classList.remove('error')
+      searchRender.classList.remove("error");
       let product = JSON.parse(localStorage.getItem(toSearch));
       let id = product.name;
-      searchTable.innerHTML = `<tr><td>${product.name}</td><td>${product.category}</td><td>${product.cost}</td><td>%${product.margin}</td><td>${product.price}</td><td><button onClick="deleteProduct('${id}')">Borrar</button></td></tr>`;
+      searchTable.innerHTML = `<tr><td>${product.name}</td><td>${product.category}</td><td>${product.cost}</td><td>%${product.margin}</td><td>${product.price}</td><td><button onClick="deleteSearchedProduct('${id}')">Borrar</button></td></tr>`;
     }
   }
-  
 };
 newProductSection.addEventListener("keyup", ({ key }) => {
   if (key === "Enter") {
