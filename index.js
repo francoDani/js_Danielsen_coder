@@ -26,19 +26,21 @@ class Product {
   }
 }
 
-let displayproducts = (e) => {
+const displayproducts = (e) => {
   table.innerHTML = "";
   if (localStorage.length != 0) {
     for (i = 0; i <= localStorage.length; i++) {
       let item = localStorage.getItem(localStorage.key(i));
       item = JSON.parse(item);
-      let id = item.name;
-      table.innerHTML += `<tr><td>${id}</td><td>${item.category}</td><td>${item.cost}</td><td>%${item.margin}</td><td>${item.price}</td><td><button onClick="deleteProduct('${id}')">Borrar</button></td></tr>`;
+      /* Desestructuración */
+      const {name, category, cost, margin, price} = item;
+      let id = name;
+      table.innerHTML += `<tr><td>${id}</td><td>${category}</td><td>${cost}</td><td>%${margin}</td><td>${price}</td><td><button onClick="deleteProduct('${id}')">Borrar</button></td></tr>`;
     }
   }
 };
 
-let orderByCategory = (product) => {
+const orderByCategory = (product) => {
   switch (product.category) {
     case "comestibles":
       food.push(product);
@@ -70,6 +72,13 @@ let orderByCategory = (product) => {
   }
 };
 
+/* spread */
+const showAll = () => {
+  let batch = [...candy, ...drinks, ...food, ...sinCategoría];  
+  let historicList = document.querySelector("#historic__ul");
+  batch.forEach(element => historicList.innerHTML += `<li>${element.name}</li>`)
+}
+
 const clearFields = () => {
   document.getElementById("product__name").value = "";
   document.getElementById("product__name").classList.remove("error");
@@ -85,7 +94,7 @@ const loadItem = (product) => {
   localStorage.setItem(product.name, JSON.stringify(product));
 };
 
-let newProduct = () => {
+const newProduct = () => {
   let name = document.getElementById("product__name").value;
   name = name.toLocaleUpperCase();
   let category = document.getElementById("product__category").value;
@@ -98,7 +107,7 @@ let newProduct = () => {
     clearFields();
     loadItem(product);
     hideError();
-    displayproducts();
+    displayproducts();    
   } else {
     showError();
   }
@@ -120,8 +129,10 @@ const searchProduct = (e) => {
     } else {
       searchRender.classList.remove("error");
       let product = JSON.parse(localStorage.getItem(toSearch));
-      let id = product.name;
-      searchTable.innerHTML = `<tr><td>${product.name}</td><td>${product.category}</td><td>${product.cost}</td><td>%${product.margin}</td><td>${product.price}</td><td><button onClick="deleteSearchedProduct('${id}')">Borrar</button></td></tr>`;
+      /* Desestructuración */
+      const {name, category, cost, margin, price} = product;
+      let id = name;
+      searchTable.innerHTML = `<tr><td>${name}</td><td>${category}</td><td>${cost}</td><td>%${margin}</td><td>${price}</td><td><button onClick="deleteSearchedProduct('${id}')">Borrar</button></td></tr>`;
     }
   }
 };
