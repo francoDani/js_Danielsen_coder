@@ -12,14 +12,38 @@ const hideError = () => {
   document.querySelector(".error__msg").classList.remove("show");
 };
 const deleteProduct = (target) => {
-  if (confirm("Estas seguro?")) {
-    localStorage.removeItem(target);
-    displayproducts('clear');
-  }
+    swal({
+      title: "Estas seguro?",
+      text: `Estas por eliminar de manera definitiva ${target}`,
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        swal(`${target} fue eliminado correctamente`, {
+          icon: "success",
+        });
+        localStorage.removeItem(target);
+        displayproducts('clear');        
+      }
+    });
 };
 const deleteSearchedProduct = (target) => {
-  if (confirm("Estas seguro?")) {
-    localStorage.removeItem(target);
-    searchProduct('clear');
-  }
+  swal({
+    title: "Estas seguro?",
+    text: `Estas por eliminar de manera definitiva ${target}`,
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  })
+  .then((willDelete) => {
+    if (willDelete) {
+      swal(`${target} fue eliminado correctamente`, {
+        icon: "success",
+      });
+      localStorage.removeItem(target);
+      searchProduct('clear');        
+    }
+  });
 };

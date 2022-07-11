@@ -1,1 +1,2 @@
-La vista trabajada es la de calculadora y home para búsqueda de productos
+Añadí sweet alert a mi proyecto para indicar estado de carga y eliminación de productos.
+Eligí esta librería porque me parece que le añade valor a mi priyecto para manter al usuario al tanto del estado del estado de la solicitud

@@ -100,15 +100,18 @@ const newProduct = () => {
   let cost = +document.getElementById("product__cost").value;
   let margin = +document.getElementById("product__gain").value;
   if (noBlankField(name, category, cost, margin)) {
+    swal("Listo!", `${name} fue agregado correctamente`, "success");
     let product = new Product(name, category, cost, margin);
     product.calculatePrice();
     orderByCategory(product);
     clearFields();
     loadItem(product);
     hideError();
-    displayproducts();    
+    displayproducts();
+    
   } else {
     showError();
+    swal("Error!", "Debes completar todos los campos", "error");
   }
 };
 
@@ -124,6 +127,12 @@ const searchProduct = (e) => {
     toSearch = toSearch.toLocaleUpperCase();
     let element = localStorage.getItem(toSearch);
     if (element == null) {
+      swal({
+        position: 'top-end',
+        icon: 'error',
+        title: 'el elemento no existe',
+        timer: 1500
+      });      
       searchRender.classList.add("error");
     } else {
       searchRender.classList.remove("error");
