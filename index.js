@@ -32,10 +32,9 @@ const displayproducts = (e) => {
     for (i = 0; i <= localStorage.length; i++) {
       let item = localStorage.getItem(localStorage.key(i));
       item = JSON.parse(item);
-      /* Desestructuración */
+      /* Desestructuración */      
       const {name, category, cost, margin, price} = item;
-      let id = name;
-      table.innerHTML += `<tr><td>${id}</td><td>${category}</td><td>${cost}</td><td>%${margin}</td><td>${price}</td><td><button onClick="deleteProduct('${id}')">Borrar</button></td></tr>`;
+      table.innerHTML += `<tr><td>${name}</td><td>${category}</td><td>${cost}</td><td>%${margin}</td><td>${price}</td><td><button onClick="deleteProduct('${name}')">Borrar</button></td></tr>`;
     }
   }
 };
