@@ -25,15 +25,21 @@ class Product {
     };
   }
 }
+const printSample = () => {
+  fetch("../assets/products.json")
+    .then((response) => response.json())
+    .then((json) => printProduct(json));
+};
 
 const displayproducts = (e) => {
   table.innerHTML = "";
+  printSample();
   if (localStorage.length != 0) {
     for (i = 0; i <= localStorage.length; i++) {
       let item = localStorage.getItem(localStorage.key(i));
       item = JSON.parse(item);
-      /* Desestructuración */      
-      const {name, category, cost, margin, price} = item;
+      /* Desestructuración */
+      const { name, category, cost, margin, price } = item;
       table.innerHTML += `<tr><td>${name}</td><td>${category}</td><td>${cost}</td><td>%${margin}</td><td>${price}</td><td><button onClick="deleteProduct('${name}')">Borrar</button></td></tr>`;
     }
   }
@@ -73,10 +79,12 @@ const orderByCategory = (product) => {
 
 /* spread */
 const showAll = () => {
-  let batch = [...candy, ...drinks, ...food, ...sinCategoría];  
+  let batch = [...candy, ...drinks, ...food, ...sinCategoría];
   let historicList = document.querySelector("#historic__ul");
-  batch.forEach(element => historicList.innerHTML += `<li>${element.name}</li>`)
-}
+  batch.forEach(
+    (element) => (historicList.innerHTML += `<li>${element.name}</li>`)
+  );
+};
 
 const clearFields = () => {
   document.getElementById("product__name").value = "";
@@ -108,13 +116,12 @@ const newProduct = () => {
     loadItem(product);
     hideError();
     displayproducts();
-    
   } else {
     showError();
     swal("Error!", "Debes completar todos los campos", "error");
   }
+  printSample();
 };
-
 /**
  * this function will be used to iterate through the arrays to find an item
  * @param {string} toSearch this input will be used to search in all te arrays for a matching product
@@ -128,17 +135,17 @@ const searchProduct = (e) => {
     let element = localStorage.getItem(toSearch);
     if (element == null) {
       swal({
-        position: 'top-end',
-        icon: 'error',
-        title: 'el elemento no existe',
-        timer: 1500
-      });      
+        position: "top-end",
+        icon: "error",
+        title: "el elemento no existe",
+        timer: 1500,
+      });
       searchRender.classList.add("error");
     } else {
       searchRender.classList.remove("error");
       let product = JSON.parse(localStorage.getItem(toSearch));
       /* Desestructuración */
-      const {name, category, cost, margin, price} = product;
+      const { name, category, cost, margin, price } = product;
       let id = name;
       searchTable.innerHTML = `<tr><td>${name}</td><td>${category}</td><td>${cost}</td><td>%${margin}</td><td>${price}</td><td><button onClick="deleteSearchedProduct('${id}')">Borrar</button></td></tr>`;
     }
